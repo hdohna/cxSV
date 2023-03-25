@@ -13,7 +13,9 @@ library(pracma)
 library(RColorBrewer)
 
 # Source functions
-AllFunctions <- list.files('/Users/heinrichzudohna/Library/Mobile Documents/com~apple~CloudDocs/cxSV/Functions/',
+# AllFunctions <- list.files('/Users/heinrichzudohna/Library/Mobile Documents/com~apple~CloudDocs/cxSV/Functions/',
+#                            full.names = T)
+AllFunctions <- list.files('/home/hb54/cxSV/Functions/',
                            full.names = T)
 sapply(AllFunctions, source)
 
@@ -33,11 +35,19 @@ PopSize <- 5*10^3
 SampleSizeSV <- 2000
 
 # Specify file paths
-cxSVPath         <- '/Users/heinrichzudohna/Documents/cxSVData/8493cxSV_updatedinfo_AF_n_indv.txt'
-SVPath           <- '/Users/heinrichzudohna/Documents/cxSVData/simpleSV_combined_updatedinfo_AF_n_indv.txt'
-RegrOutputPath   <- paste0("/Users/heinrichzudohna/Library/Mobile Documents/com~apple~CloudDocs/cxSV/Results/SelectionRegressionResults_PopSize",
+# cxSVPath         <- '/Users/heinrichzudohna/Documents/cxSVData/8493cxSV_updatedinfo_AF_n_indv.txt'
+# SVPath           <- '/Users/heinrichzudohna/Documents/cxSVData/simpleSV_combined_updatedinfo_AF_n_indv.txt'
+# RegrOutputPath   <- paste0("/Users/heinrichzudohna/Library/Mobile Documents/com~apple~CloudDocs/cxSV/Results/SelectionRegressionResults_PopSize",
+#                            PopSize, ".RData")
+# AICTabOutputPath <- paste0("/Users/heinrichzudohna/Library/Mobile Documents/com~apple~CloudDocs/cxSV/Results/SelectionRegressionAICTab_PopSize",
+#                            PopSize, ".csv")
+
+
+cxSVPath         <- '/home/hb54/cxSVData/8493cxSV_updatedinfo_AF_n_indv.txt'
+SVPath           <- '/home/hb54/cxSVData/simpleSV_combined_updatedinfo_AF_n_indv.txt'
+RegrOutputPath   <- paste0("/home/hb54/cxSV/Results/SelectionRegressionResults_PopSize",
                            PopSize, ".RData")
-AICTabOutputPath <- paste0("/Users/heinrichzudohna/Library/Mobile Documents/com~apple~CloudDocs/cxSV/Results/SelectionRegressionAICTab_PopSize",
+AICTabOutputPath <- paste0("/home/hb54/cxSV/Results/SelectionRegressionAICTab_PopSize",
                            PopSize, ".csv")
 
 
@@ -178,6 +188,7 @@ HistSV <- hist(SVs$span, breaks = seq(0, 1.1*max(SVs$span), BinWidth),
                xlim = c(0, 5*10^3))
 HistcxSV <- hist(cxSVs$span, breaks = seq(0, 1.1*max(SVs$span), BinWidth),
                  xlim = c(0, 5*10^3))
+pdf(file = "/home/hb54/cxSV/Figures/Selection coefficient vs variant size.pdf")
 par(mar = c(5, 4, 4, 4) + 0.3)              # Additional space for second y-axis
 plot(c(0, MaxSize), c(0, max(c(HistSV$density, HistcxSV$density))), 
      xlab = "Variant size [bp]", ylab  = "Density",
@@ -202,4 +213,4 @@ mtext(expression(N[e]~"*"~s), side = 4, line = 3)
 
 # Add legend
 legend("topright", bty = "n", col = Cols[1:2], legend = c("SV", "cxSV"), lty = 1)
-dev.copy2pdf(file = "/Users/heinrichzudohna/Library/Mobile Documents/com~apple~CloudDocs/cxSV/Figures/Selection coefficient vs variant size.pdf")
+dev.off()
