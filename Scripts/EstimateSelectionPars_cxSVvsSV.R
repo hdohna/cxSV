@@ -29,7 +29,7 @@ sapply(AllFunctions, source)
 FDR <- 0.1
 
 # Human effective population size
-PopSize <- 5*10^3
+PopSize <- 2*10^4
 
 # Sample size to randomly sample standard SVs
 SampleSizeSV <- 2000
@@ -168,6 +168,9 @@ ML_Log <- constrOptim(theta = c(a = ModelFit_pracma$ML_abc$par["a.a.a"],
                                     a = -0.003, b = -10^(-2), c = -10^(-2)),
                              method = "Nelder-Mead")
 cat("done!\n\n")
+
+# Save everything
+save.image(RegrOutputPath)
 
 ##########################################################
 #                                                        #
