@@ -103,8 +103,8 @@ if(Cols2Include == 0){
   cat("****. Estimating maximum likelihood for a single selection coefficient  ****\n")
   ML <-  constrOptim(theta = c(a = 0),
                        f = function(x) -AlleleFreqLogLik_3Par_pracma(
-                         Freqs = Freqs,
-                         Counts = rep(1, length(Freqs)),
+                         Freqs = AllSV$n_ind,
+                         Counts = rep(1, nrow(AllSV)),
                          Predict = PredictMat,
                          a = x[1], 
                          b = 0, 
