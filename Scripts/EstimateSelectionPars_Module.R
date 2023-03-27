@@ -13,6 +13,7 @@ Args <- commandArgs(trailingOnly = T)
 #                                        #
 ##########################################
 
+cat("Setting parameters:\n")
 # Human effective population size
 PopSize <- as.numeric(Args[1])
 
@@ -34,6 +35,7 @@ cxSVPath         <- '/home/hb54/cxSVData/8493cxSV_updatedinfo_AF_n_indv.txt'
 SVPath           <- '/home/hb54/cxSVData/simpleSV_combined_updatedinfo_AF_n_indv.txt'
 idxVars <- ifelse(Cols2Include == 0, NULL, Cols2Include)
 VarNames <- c("Int", "Complex", "Size", "LogSize")[c(1, idxVars)]
+cat("Model will fit coefficient for:", VarNames, "\n")
 RegrOutputPath   <- paste0("/home/hb54/cxSV/Results/SelectionRegressionResults_PopSize",
                            PopSize,"_Vars_", paste(VarNames, collapse = "_"),
                            ".RData")
