@@ -120,7 +120,6 @@ if(Cols2Include == 0){
   
 } else {
 
-  cat("Estimate effect of", colnames(PredictMat), "on selection ...\n")
   NPar <- length(Cols2Include) + 1
   ThetaStart <- c(a = 0, b = 0, c = 0)[1:NPar]
   UI <- rbind(diag(3), -diag(3)) [c(1:NPar, 3 + 1:NPar),1:NPar]
@@ -128,6 +127,7 @@ if(Cols2Include == 0){
                c = -cBorder, b = -bBorder, c = -bBorder)[c(1, 1 + Cols2Include)]
   CI = c(Border1, Border1)
   PredictMat <- PredictMat[, rep(Cols2Include, 1 + (NPar == 2))]
+  cat("Estimate effect of", colnames(PredictMat), "on selection ...\n")
   
   ML <-  constrOptim(theta = ThetaStart,
                         f = function(x) -AlleleFreqLogLik_3Par_pracma(
