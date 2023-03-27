@@ -22,7 +22,7 @@ SampleSizeSV <- as.numeric(Args[2])
 
 # Get the columns of the prediction matrix to include
 Cols2Include <- eval(parse(text = Args))
-if(!all(Cols2Include %in% 0:2)) stop("Third argument should be integers between 0 and 3\n")
+if(!all(Cols2Include %in% 0:2)) stop("Third argument should be integers between 0 and 5\n")
 
 # Define borders for constrained parameter estimations
 aBorder = 0.003 
@@ -33,8 +33,8 @@ cBorder = 10^(-6)
 FunctionPath     <- '/home/hb54/cxSV/Functions/'
 cxSVPath         <- '/home/hb54/cxSVData/8493cxSV_updatedinfo_AF_n_indv.txt'
 SVPath           <- '/home/hb54/cxSVData/simpleSV_combined_updatedinfo_AF_n_indv.txt'
-idxVars <- ifelse(Cols2Include == 0, NULL, Cols2Include)
-VarNames <- c("Int", "Complex", "Size", "LogSize")[c(1, idxVars)]
+idxVars <- ifelse(Cols2Include == 0, 1, c(1, Cols2Include))
+VarNames <- c("Int", "Complex", "Size", "LogSize")[idxVars]
 cat("Model will fit coefficient for:", VarNames, "\n")
 RegrOutputPath   <- paste0("/home/hb54/cxSV/Results/SelectionRegressionResults_PopSize",
                            PopSize,"_Vars_", paste(VarNames, collapse = "_"),
