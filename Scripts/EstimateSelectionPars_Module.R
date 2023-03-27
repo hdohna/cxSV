@@ -13,7 +13,7 @@ Args <- commandArgs(trailingOnly = T)
 #                                        #
 ##########################################
 
-cat("Setting parameters:\n")
+cat("Setting parameters ... ")
 # Human effective population size
 PopSize <- as.numeric(Args[1])
 
@@ -35,10 +35,11 @@ cxSVPath         <- '/home/hb54/cxSVData/8493cxSV_updatedinfo_AF_n_indv.txt'
 SVPath           <- '/home/hb54/cxSVData/simpleSV_combined_updatedinfo_AF_n_indv.txt'
 idxVars <- ifelse(Cols2Include == 0, 1, c(1, Cols2Include))
 VarNames <- c("Int", "Complex", "Size", "LogSize")[idxVars]
-cat("Model will fit coefficient for:", VarNames, "\n")
 RegrOutputPath   <- paste0("/home/hb54/cxSV/Results/SelectionRegressionResults_PopSize",
                            PopSize,"_Vars_", paste(VarNames, collapse = "_"),
-                           ".RData")
+                          ".RData")
+cat(" done!\n") 
+cat("Model will fit coefficient for:", VarNames, "\n")
 
 ##########################################
 #                                        #
@@ -46,12 +47,14 @@ RegrOutputPath   <- paste0("/home/hb54/cxSV/Results/SelectionRegressionResults_P
 #                                        #
 ##########################################
 
+cat("Loading packages and functions ... ")
 # Load packages
 library(pracma)
 
 # Source functions
 AllFunctions <- list.files(FunctionPath, full.names = T)
 sapply(AllFunctions, source)
+cat(" done!\n") 
 
 ##########################################
 #                                        #
