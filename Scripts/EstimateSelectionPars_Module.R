@@ -101,6 +101,7 @@ colnames(PredictMat) <- c("complex", "span", "logspan", "slope_complex",
                           "slope_simple")
 if(Cols2Include == 0){
   cat("****. Estimating maximum likelihood for a single selection coefficient  ****\n")
+  PredictMat <- PredictMat[,1:2]
   ML <-  constrOptim(theta = c(a = 0),
                        f = function(x) -AlleleFreqLogLik_3Par_pracma(
                          Freqs = AllSV$n_ind,
@@ -118,18 +119,20 @@ if(Cols2Include == 0){
   cat("done!\n")
   
 } else {
-  PredictMat <- PredictMat[,Cols2Include]
+
   cat("Estimate effect of", colnames(PredictMat), "on selection ...\n")
-  NPar <- ncol(PredictMat) + 1
+  NPar <- length(Cols2Include) + 1
   ThetaStart <- c(a = 0, b = 0, c = 0)[1:NPar]
   UI <- rbind(diag(3), -diag(3)) [c(1:NPar, 3 + 1:NPar),1:NPar]
-  Border1 <- c(a = -aBorder, b = -bBorder, c = -cBorder)[c(1, 1+Cols2Include)]
+  Border1 <- c(a = -aBorder, b = -bBorder, c = -cBorder,
+               c = -cBorder, b = -bBorder, c = -bBorder)[c(1, 1 + Cols2Include)]
   CI = c(Border1, Border1)
+  PredictMat <- PredictMat[, rep(Cols2Include, 1 + (NPar == 2))]
   
   ML <-  constrOptim(theta = c(a = ML_a$par, b = 0),
                         f = function(x) -AlleleFreqLogLik_3Par_pracma(
-                          Freqs = Freqs,
-                          Counts = rep(1, length(Freqs)),
+                          Freqs = AllSV$n_ind,
+                          Counts = rep(1, nrow(AllSV)),
                           Predict = PredictMat,
                           a = x[1], 
                           b = x[2], 
