@@ -129,7 +129,7 @@ if(Cols2Include == 0){
   CI = c(Border1, Border1)
   PredictMat <- PredictMat[, rep(Cols2Include, 1 + (NPar == 2))]
   
-  ML <-  constrOptim(theta = c(a = ML_a$par, b = 0),
+  ML <-  constrOptim(theta = ThetaStart,
                         f = function(x) -AlleleFreqLogLik_3Par_pracma(
                           Freqs = AllSV$n_ind,
                           Counts = rep(1, nrow(AllSV)),
