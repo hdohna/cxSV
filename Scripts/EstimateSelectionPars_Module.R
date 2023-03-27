@@ -138,7 +138,7 @@ if(Cols2Include == 0){
                           b = x[2], 
                           c = ifelse(NPar == 3, x[3], 0), 
                           N = PopSize, 
-                          SampleSize = SampleSize),
+                          SampleSize = NSample),
                         grad = NULL,
                         ui = UI,
                         ci = CI,
