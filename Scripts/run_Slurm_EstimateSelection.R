@@ -10,10 +10,11 @@ NSampleSV <- 2000
 
 # Read in SV data, draw a subset and random and write it out
 SVs          <- read.delim('/home/hb54/cxSVData/simpleSV_combined_updatedinfo_AF_n_indv.txt')
-SVSampleRows <- sample(1:nrow(SVs), SampleSizeSV)
+SVSampleRows <- sample(1:nrow(SVs), NSampleSV)
 SVSample     <- SVs[SVSampleRows, ]
-SVOutPath    <- paste0('/home/hb54/cxSVData/sampledSV', 
-                       timestamp(prefix = "_", suffix = ".csv"))
+TStamp <- timestamp(prefix = "", suffix = "")
+TStamp <- gsub(" ", "_", TStamp)
+SVOutPath    <- paste0('/home/hb54/cxSVData/sampledSV_',TStamp,".csv")
 write.csv(SVSample, SVOutPath, row.names = F)
 
 # Command to load r
