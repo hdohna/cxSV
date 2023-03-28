@@ -35,14 +35,6 @@ PopSize <- 2*10^4
 SampleSizeSV <- 2000
 
 # Specify file paths
-# cxSVPath         <- '/Users/heinrichzudohna/Documents/cxSVData/8493cxSV_updatedinfo_AF_n_indv.txt'
-# SVPath           <- '/Users/heinrichzudohna/Documents/cxSVData/simpleSV_combined_updatedinfo_AF_n_indv.txt'
-# RegrOutputPath   <- paste0("/Users/heinrichzudohna/Library/Mobile Documents/com~apple~CloudDocs/cxSV/Results/SelectionRegressionResults_PopSize",
-#                            PopSize, ".RData")
-# AICTabOutputPath <- paste0("/Users/heinrichzudohna/Library/Mobile Documents/com~apple~CloudDocs/cxSV/Results/SelectionRegressionAICTab_PopSize",
-#                            PopSize, ".csv")
-
-
 cxSVPath         <- '/home/hb54/cxSVData/8493cxSV_updatedinfo_AF_n_indv.txt'
 SVPath           <- '/home/hb54/cxSVData/simpleSV_combined_updatedinfo_AF_n_indv.txt'
 RegrOutputPath   <- paste0("/home/hb54/cxSV/Results/SelectionRegressionResults_PopSize",
