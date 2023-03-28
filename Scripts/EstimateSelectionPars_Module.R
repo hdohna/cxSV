@@ -14,14 +14,15 @@ Args <- commandArgs(trailingOnly = T)
 ##########################################
 
 cat("Setting parameters ... ")
+
 # Human effective population size
 PopSize <- as.numeric(Args[1])
 
-# Sample size to randomly sample standard SVs
-SampleSizeSV <- as.numeric(Args[2])
+# Path to file with sampled SVs
+SVPath <- Args[2]
 
 # Get the columns of the prediction matrix to include
-Cols2Include <- eval(parse(text = Args))
+Cols2Include <- eval(parse(text = Args[3]))
 if(!all(Cols2Include %in% 0:5)) stop("Third argument should be integers between 0 and 5\n")
 
 # Define borders for constrained parameter estimations
@@ -32,7 +33,6 @@ cBorder = 10^(-6)
 # Specify file paths
 FunctionPath     <- '/home/hb54/cxSV/Functions/'
 cxSVPath         <- '/home/hb54/cxSVData/8493cxSV_updatedinfo_AF_n_indv.txt'
-SVPath           <- '/home/hb54/cxSVData/simpleSV_combined_updatedinfo_AF_n_indv.txt'
 idxVars <- ifelse(Cols2Include == 0, 1, c(1, Cols2Include))
 VarNames <- c("Int", "Complex", "Size", "LogSize")[idxVars]
 RegrOutputPath   <- paste0("/home/hb54/cxSV/Results/SelectionRegressionResults_PopSize",
@@ -65,15 +65,12 @@ cat(" done!\n")
 cat("\n\nLoading and processing data ...")
 
 # Read in files with cxSVs and standardSVs 
-cxSVs        <- read.delim(cxSVPath)
-SVs          <- read.delim(SVPath)
-SVSampleRows <- sample(1:nrow(SVs), SampleSizeSV)
-SVSample     <- SVs[SVSampleRows, ]
+cxSVs <- read.delim(cxSVPath)
+SVs   <- read.csv(SVPath)
 
 # Create a new file that combines both types of variants
 Vars2Include <- c("span", "AF", "n_ind")
-AllSV        <- rbind(cxSVs[,Vars2Include], 
-                      SVSample[,Vars2Include])
+AllSV        <- rbind(cxSVs[,Vars2Include],  SVs[,Vars2Include])
 
 # Add an indicator variable whether SV is complex 
 AllSV$complex <- F
@@ -101,6 +98,8 @@ colnames(PredictMat) <- c("complex", "span", "logspan", "slope_complex",
                           "slope_simple")
 if(Cols2Include == 0){
   cat("****. Estimating maximum likelihood for a single selection coefficient  ****\n")
+  NPar <- 1
+  cat("Number of model parameters:", NPar, "\n")
   PredictMat <- PredictMat[,1:2]
   ML <-  constrOptim(theta = c(a = 0),
                        f = function(x) -AlleleFreqLogLik_3Par_pracma(
@@ -128,6 +127,7 @@ if(Cols2Include == 0){
   CI = c(Border1, Border1)
   PredictMat <- PredictMat[, rep(Cols2Include, 1 + (NPar == 2))]
   cat("Estimate effect of", colnames(PredictMat), "on selection ...\n")
+  cat("Number of model parameters:", NPar, "\n")
   
   ML <-  constrOptim(theta = ThetaStart,
                         f = function(x) -AlleleFreqLogLik_3Par_pracma(
