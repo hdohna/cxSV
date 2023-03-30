@@ -33,8 +33,8 @@ cBorder = 10^(-6)
 # Specify file paths
 FunctionPath     <- '/home/hb54/cxSV/Functions/'
 cxSVPath         <- '/home/hb54/cxSVData/8493cxSV_updatedinfo_AF_n_indv.txt'
-idxVars <- ifelse(Cols2Include == 0, 1, c(1, Cols2Include))
-VarNames <- c("Int", "Complex", "Size", "LogSize")[idxVars]
+idxVars <- ifelse(Cols2Include[1] == 0, 1, c(1, Cols2Include + 1))
+VarNames <- c("Int", "Complex", "Size", "LogSize", "SlopeCxSV", "SolpeSV")[idxVars]
 RegrOutputPath   <- paste0("/home/hb54/cxSV/Results/SelectionRegressionResults_PopSize",
                            PopSize,"_Vars_", paste(VarNames, collapse = "_"),
                           ".RData")
@@ -101,7 +101,7 @@ if(Cols2Include == 0){
   NPar <- 1
   cat("Number of model parameters:", NPar, "\n")
   PredictMat <- PredictMat[,1:2]
-  ML <-  constrOptim(theta = c(a = 0),
+  ML <-  constrOptim(theta = c(a = -5*10^-5),
                        f = function(x) -AlleleFreqLogLik_3Par_pracma(
                          Freqs = AllSV$n_ind,
                          Counts = rep(1, nrow(AllSV)),
@@ -120,10 +120,11 @@ if(Cols2Include == 0){
 } else {
 
   NPar <- length(Cols2Include) + 1
-  ThetaStart <- c(a = 0, b = 0, c = 0)[1:NPar]
+  ThetaStart <- -c(a = 5*10^-5, b = 2*10^-4, c = 2*10^-7,
+                   c = 1*10^-7, c = 2*10^-7, c = 2*10^-7)[idxVars]
   UI <- rbind(diag(3), -diag(3)) [c(1:NPar, 3 + 1:NPar),1:NPar]
   Border1 <- c(a = -aBorder, b = -bBorder, c = -cBorder,
-               c = -cBorder, b = -bBorder, c = -bBorder)[c(1, 1 + Cols2Include)]
+               c = -cBorder, b = -bBorder, c = -bBorder)[idxVars]
   CI = c(Border1, Border1)
   PredictMat <- PredictMat[, rep(Cols2Include, 1 + (NPar == 2))]
   cat("Estimate effect of", colnames(PredictMat), "on selection ...\n")
@@ -148,6 +149,6 @@ if(Cols2Include == 0){
 }
 
 # Save everything
-cat("Saving results ... ")
+cat("Saving results to", RegrOutputPath, " ... ")
 save.image(RegrOutputPath)
-cat("done!")
+cat("done!\n\n")
