@@ -24,6 +24,7 @@ SVPath <- Args[2]
 # Get the columns of the prediction matrix to include
 Cols2Include <- eval(parse(text = Args[3]))
 if(!all(Cols2Include %in% 0:5)) stop("Third argument should be integers between 0 and 5\n")
+cat("Columns to include are:", Cols2Include, "\n")
 
 # Define borders for constrained parameter estimations
 aBorder = 0.003 
