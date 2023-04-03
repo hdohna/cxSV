@@ -13,7 +13,7 @@ Args <- commandArgs(trailingOnly = T)
 #                                        #
 ##########################################
 
-cat("Setting parameters ... ")
+cat("Setting parameters ... \n")
 
 # Human effective population size
 PopSize <- as.numeric(Args[1])
@@ -48,7 +48,7 @@ cat("Model will fit coefficient for:", VarNames, "\n")
 #                                        #
 ##########################################
 
-cat("Loading packages and functions ... ")
+cat("Loading packages and functions ... \n")
 # Load packages
 library(pracma)
 
