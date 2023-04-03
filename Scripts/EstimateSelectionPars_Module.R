@@ -39,14 +39,11 @@ if(Cols2Include[1] == 0){
 } else {
   idxVars <- c(1, Cols2Include + 1)
 }
-cat("Cols2Include:", Cols2Include, "\n")
-cat("idxVars:", idxVars, "\n")
 VarNames <- c("Int", "Complex", "Size", "LogSize", "SlopeCxSV", "SolpeSV")[idxVars]
 RegrOutputPath   <- paste0("/home/hb54/cxSV/Results/SelectionRegressionResults_PopSize",
                            PopSize,"_Vars_", paste(VarNames, collapse = "_"),
                           ".RData")
 cat(" done!\n") 
-cat("Model will fit coefficient for:", VarNames, "\n")
 cat("Model will fit coefficient for:", VarNames, "\n")
 
 ##########################################
@@ -135,7 +132,7 @@ if(Cols2Include == 0){
                c = -cBorder, b = -bBorder, c = -bBorder)[idxVars]
   CI = c(Border1, Border1)
   PredictMat <- PredictMat[, rep(Cols2Include, 1 + (NPar == 2))]
-  cat("Estimate effect of", colnames(PredictMat), "on selection ...\n")
+  cat("Estimate effect of", colnames(PredictMat)[1:(NPar - 1)], "on selection ...\n")
   cat("Number of model parameters:", NPar, "\n")
   
   ML <-  constrOptim(theta = ThetaStart,
