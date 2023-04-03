@@ -35,11 +35,14 @@ cBorder = 10^(-6)
 FunctionPath     <- '/home/hb54/cxSV/Functions/'
 cxSVPath         <- '/home/hb54/cxSVData/8493cxSV_updatedinfo_AF_n_indv.txt'
 idxVars <- ifelse(Cols2Include[1] == 0, 1, c(1, Cols2Include + 1))
+cat("Cols2Include:", Cols2Include, "\n")
+cat("idxVars:", idxVars, "\n")
 VarNames <- c("Int", "Complex", "Size", "LogSize", "SlopeCxSV", "SolpeSV")[idxVars]
 RegrOutputPath   <- paste0("/home/hb54/cxSV/Results/SelectionRegressionResults_PopSize",
                            PopSize,"_Vars_", paste(VarNames, collapse = "_"),
                           ".RData")
 cat(" done!\n") 
+cat("Model will fit coefficient for:", VarNames, "\n")
 cat("Model will fit coefficient for:", VarNames, "\n")
 
 ##########################################
