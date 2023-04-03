@@ -34,6 +34,12 @@ cBorder = 10^(-6)
 # Specify file paths
 FunctionPath     <- '/home/hb54/cxSV/Functions/'
 cxSVPath         <- '/home/hb54/cxSVData/8493cxSV_updatedinfo_AF_n_indv.txt'
+if(Cols2Include[1] == 0){
+  idxVars <- 1
+} else {
+  idxVars <- c(1, Cols2Include + 1)
+}
+
 idxVars <- ifelse(Cols2Include[1] == 0, 1, c(1, Cols2Include + 1))
 cat("Cols2Include:", Cols2Include, "\n")
 cat("idxVars:", idxVars, "\n")
