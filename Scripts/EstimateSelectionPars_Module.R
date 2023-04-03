@@ -39,8 +39,6 @@ if(Cols2Include[1] == 0){
 } else {
   idxVars <- c(1, Cols2Include + 1)
 }
-
-idxVars <- ifelse(Cols2Include[1] == 0, 1, c(1, Cols2Include + 1))
 cat("Cols2Include:", Cols2Include, "\n")
 cat("idxVars:", idxVars, "\n")
 VarNames <- c("Int", "Complex", "Size", "LogSize", "SlopeCxSV", "SolpeSV")[idxVars]
