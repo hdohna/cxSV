@@ -10,18 +10,9 @@ FirstNonZero <- function(x, MaxDigits  = 10){
   min(which((abs(x) - 10^-(0:MaxDigits)) > 0))
 }
 
-# Function to process results
-ResultPath <- ResultFiles[1]
-ResultPath
-load(ResultPath)
-idxVars
-ML$par
-Args[3]
-Cols2Include
+# Process results from different runs and put them in a table
 ResultTable <- t(sapply(ResultFiles[-1], function(ResultPath){
   load(ResultPath)
-  # Correct a mistake in the original script EstimateSelectionPars_Module.R here
-  idxVars <- ifelse(length(idxVars) == 1, 1, c(1, idxVars + 1))
   VarNames <- c("Int", "Complex", "Size", "LogSize", "SlopeCx", "SlopeSV")[idxVars]
   ParsSimple <- sapply(ML$par, function(x){
     NDigit <- FirstNonZero(x)
