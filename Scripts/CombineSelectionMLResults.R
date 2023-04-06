@@ -28,5 +28,18 @@ ResultTable <- t(sapply(ResultFiles[-1], function(ResultPath){
     
   )
 }))
-ResultTable
+
+# Turn table into a data frame and make numeric columns numeric
+ResultTable <- as.data.frame(ResultTable)
+for (Col in c("Likelihood", "NrParameters", "AIC")){
+  ResultTable[, Col] <- as.numeric(ResultTable[, Col])
+}
+
+write(ResultTable, "cxSV/Results/ResultTable.csv")
+
+# Likelihood ratio test to compare top two models
+orderAIC <- order(ResultTable$AIC)
+DiffLik <- ResultTable$Likelihood[orderAIC[2]] - ResultTable$Likelihood[orderAIC[1]]
+DiffPar   <- ResultTable$NrParameters[orderAIC[1]] - ResultTable$NrParameters[orderAIC[2]]
+pchisq(q = 2*DiffLik, df = DiffPar, ncp = 0, lower.tail = F, log.p = FALSE)
 
