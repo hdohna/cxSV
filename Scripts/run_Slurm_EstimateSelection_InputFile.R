@@ -34,6 +34,12 @@ SubmitRun <- function(PopSize, SVPath, Cols2Include, ThetaStart){
 
 # Submit runs for individual models that did not complete
 
+# 1-parameter model for population size of 20,000
+SubmitRun(PopSize = 2*10^4, 
+          SVPath = "/home/hb54/cxSVData/sampledSV_Tue_Mar_28_08:33:50_2023.csv",
+          Cols2Include = 0,
+          ThetaStart = c(a = -0.0004))
+
 # linear 3-parameter model for population size of 20,000
 SubmitRun(PopSize = 2*10^4, 
           SVPath = "/home/hb54/cxSVData/sampledSV_Tue_Mar_28_08:33:50_2023.csv",
